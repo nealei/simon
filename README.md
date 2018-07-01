@@ -3,13 +3,13 @@
 **Get It:** The challenges of installing python in a corporate environment are reduced by installing Miniconda Python 2.7 without adding Anaconda to the PATH statement or registering Anaconda as the default Python. Start, Anaconda Prompt will ensure the correct environment is in place for the session. The make_trf.py and avg_seeds.py modules require the python openpyxl package.
 The computer must have the Trarr Traffic Simulation installed.
 Install Simon files in the Trarr program directory. Save spreadsheet templates to automate the setup and reporting in the users template directory (eg C:\Users\user\AppData\Roaming\Microsoft\Templates).
-**Use:** DoSimon and spreadsheet templates have been setup as an easy way of making and running simulations. Huge numbers of simulations can be set up in a spreadsheet and saved as a batch file which uses OptionEditor.py to make Trarr road option files without going through the graphical front-end or corrupting the files.
+**Use:** DoSimon and spreadsheet templates have been setup as an easy way of making and running simulations. Huge numbers of simulations can be set up in a spreadsheet and saved as a batch file which uses option_editor.py to make Trarr road option files without going through the graphical front-end or corrupting the files.
 **1)** The proj_ directory must contain the existing road files (.ROD, .MLT & .OBS) for all time periods and years.
 **2)** Traffic files can be created with the **TrarrSetupTRF** template.
 **3)** The **MakeSimonSetup** template has instructions for saving a MakeSimonSetup file. Following is an extract from MakeSimonSetupHW4.bat:
 `Echo Run as %0 ^>%0.log to overwrite log file`
-`..\OptionEditor.py HW4S3a.ROD 6.1 7.4 C HW4S3a_OT002.ROD "Overtaking Lane 2: 6.1-7.4km Eastbound"`
-`..\OptionEditor.py HW4S3b.ROD 33 34 P HW4S3b_OT011.ROD "Overtaking Lane 11: 33.0-34.0km Westbound"`
+`..\option_editor.py HW4S3a.ROD 6.1 7.4 C HW4S3a_OT002.ROD "Overtaking Lane 2: 6.1-7.4km Eastbound"`
+`..\option_editor.py HW4S3b.ROD 33 34 P HW4S3b_OT011.ROD "Overtaking Lane 11: 33.0-34.0km Westbound"`
 Note Limits: Overtaking lane start/stop one decimal place and Description 50 characters.
 This file is also used to setup economic analysis so you should familiarise yourself with file naming conventions in economic analysis template ReadMe sheet.
 **4)** In Windows explorer navigate to proj_ directory and enter `..\mc` in Address Bar to start MiniConda prompt.
