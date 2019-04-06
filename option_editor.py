@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 """ Use existing road file to create new overtaking lane option file(s).
 
-By Neale Irons version 01/07/2018 (CC BY-SA 4.0)
+By Neale Irons version 06/04/2019 (CC BY-SA 4.0)
 Known bugs:
 """
 
@@ -205,7 +205,7 @@ def main():
             while otl_start_km + .000001 < otl_end_km:   # 1mm rounding error
                 nrec = (otl_start_km - .000001 - odo_start_km) // \
                         ODO_STEP_KM + 1
-                fpos = header_length + (nrec * RECORD_SIZE) - 1
+                fpos = int(header_length + (nrec * RECORD_SIZE) - 1)
 
                 logging.debug('nrec fpos  otl_start_km: %3.0f, %i, %3.1f',
                               nrec, fpos, otl_start_km)
@@ -259,10 +259,10 @@ def main():
     RECORD_SIZE = 109
     BARRIER_COLUMN1 = 11
     BARRIER_COLUMN2 = 16
-    BARRIER_VALUE = '-'     # Debug - use '+' instead of '-'
+    BARRIER_VALUE = b'-'     # Debug - use '+' instead of '-'
     OTLANE_COLUMN1 = 22
     OTLANE_COLUMN2 = 27
-    OTLANE_VALUE = 'T'      # Debug - use 'Y' instead of 'T'
+    OTLANE_VALUE = b'T'      # Debug - use 'Y' instead of 'T'
     OTLANE_DIRECTION_CODES = "PCB"
     HASHFILE = "Hashcode.MD5"
 
