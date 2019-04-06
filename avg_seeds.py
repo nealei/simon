@@ -1,12 +1,12 @@
 #! /usr/bin/env python
 """ Make standard average output sheets from Trarr simulations.
 
-By Neale Irons version 29/05/2018 (CC BY-SA 4.0)
+By Neale Irons version 06/04/2019 (CC BY-SA 4.0)
 todo: resize and centre columns, font to Arial 10
 """
 
 from __future__ import print_function
-from itertools import tee, izip_longest
+from itertools import tee, zip_longest
 from openpyxl.styles import Font
 from openpyxl.styles import Font, colors
 from openpyxl.utils import column_index_from_string
@@ -141,10 +141,10 @@ def main():
     BLOCK_LAYOUT_ROWS = 13
     INDICIES = [0, 9, 17, 23, 33, 38, 46, 54, 65, 72, 82, 91, 100, 110, 119]
     #      ['col_hdr',         'search',   'extra rows', 'out_col', 'av_col]
-    BLK = [['Direction 1',     ' DIR1',     2,           'R',       'H'],
-           ['Direction 2',     ' DIR2',     2,           'AI',      'O'],
+    BLK = [['Direction 1',     b' DIR1',     2,           'R',       'H'],
+           ['Direction 2',     b' DIR2',     2,           'AI',      'O'],
            ['Both Directions',
-                    '          * INTERVAL', 3,           'A',       'A']]
+                    b'          * INTERVAL', 3,           'A',       'A']]
     #      ['unimpeded_speed', ' ** FREE',  13, 21:27,   'F']
     #      ['Seed',            '_seed',     0,           'A']
 
@@ -232,9 +232,9 @@ def main():
                             if index == 2:
                                 break
                         # Check seed
-                        if seed != int(line.split('.')[0].split('_seed')[1]):
-                            print(seed,  int(line.split('.')[0].split('_seed')[1]))
-                            seed = line.split('.')[0].split('_seed')[1]
+                        if seed != int(line.split(b'.')[0].split(b'_seed')[1]):
+                            print(seed,  int(line.split(b'.')[0].split(b'_seed')[1]))
+                            seed = line.split(b'.')[0].split(b'_seed')[1]
                             sys.exit("Filename %s does not contain seed."
                                      " Exiting..." % file)
                     # Find block
@@ -242,7 +242,7 @@ def main():
                         if line.startswith(BLK[bidx][1]):
                             # print(length)
                             if length == 0:
-                                length = (int(line.split('(')[1].split('.')[0]))
+                                length = (int(line.split(b'(')[1].split(b'.')[0]))
                             break
                     # Skip block header
                     for line in range(BLK[bidx][2] - 1):
@@ -255,21 +255,21 @@ def main():
                             break
                         start, end = tee(INDICIES)
                         next(end)
-                        line = line.rstrip('\r\n')
-                        fields = [line[i:j].strip(' ') for i, j in izip_longest(start, end)]
+                        line = line.rstrip(b'\r\n')
+                        fields = [line[i:j].strip(b' ') for i, j in zip_longest(start, end)]
 
                         for col, field in enumerate(fields, start=0):
                             ws.cell(row=index + xrow, column=col + xcol).value = field
                         if index > 2:  # Number of header lines - 1
-                            for k in range(1, len(INDICIES)):  # For each field
-                                if fields[k] != '':
+                            for k in range(1, len(INDICIES)):  # Data for each field
+                                if fields[k] != b'':
                                     output[0][bidx][index-2][k] += float(fields[k])
                                     if float(fields[k]) > 0:
                                         output[1][bidx][index-2][k] += 1
 
                 # Find unimpeded speed all
                 for index, line in enumerate(f):
-                    if line.startswith(' ** FREE'):
+                    if line.startswith(b' ** FREE'):
                         break
                 # Skip block header
                 for index, line in enumerate(f):
